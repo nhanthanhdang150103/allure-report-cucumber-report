@@ -1,0 +1,9 @@
+{
+  "default": {
+    "paths": ["tests/features/*.feature"],
+    "require": ["tests/step-definitions/*.ts"],
+    "format": ["@cucumber/pretty-formatter"],
+    "requireModule": ["ts-node/register"],
+    "timeouttypicalTimeout": 60000 
+  }
+}
