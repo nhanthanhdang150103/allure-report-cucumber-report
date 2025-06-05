@@ -4,6 +4,6 @@
     "require": ["tests/step-definitions/*.ts"],
     "format": ["@cucumber/pretty-formatter"],
     "requireModule": ["ts-node/register"],
-    "timeout": 60000
+    "timeouttypicalTimeout": 60000 
   }
 }
