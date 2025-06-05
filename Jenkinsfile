@@ -5,7 +5,7 @@ pipeline {
     tools {
         // Đảm bảo bạn đã cấu hình NodeJS installation trong Jenkins Global Tool Configuration
         // Thay 'NodeJS-LTS' bằng tên NodeJS installation của bạn
-        nodejs 'NodeJS'
+        nodejs 'Node22'
     }
 
     environment {
