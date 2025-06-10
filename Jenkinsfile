@@ -3,7 +3,7 @@ pipeline {
     agent {
         // Sử dụng NodeJS agent. Đảm bảo bạn đã cấu hình NodeJS trong Jenkins Global Tool Configuration
         // và đặt tên cho nó (ví dụ: 'NodeJS-18')
-        nodejs 'NodeJS-18' // Thay 'NodeJS-18' bằng tên cấu hình NodeJS của bạn
+        nodejs 'Node22' // Thay 'NodeJS-18' bằng tên cấu hình NodeJS của bạn
     }
 
     environment {
