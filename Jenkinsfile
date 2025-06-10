@@ -8,17 +8,12 @@ pipeline {
 
     environment {
         // Định nghĩa các biến môi trường cần thiết cho tests
-        // Jenkins có thể quản lý các secrets này một cách an toàn hơn thông qua Credentials.
-        // Ví dụ:
-        // BASE_URL = credentials('your-base-url-credential-id')
-        // LOGIN_USERNAME = credentials('your-login-username-credential-id')
-        // LOGIN_PASSWORD = credentials('your-login-password-credential-id')
-
-        // Đối với ví dụ này, chúng ta sẽ hardcode (không khuyến khích cho production)
-        // Hoặc bạn có thể thiết lập chúng trong Jenkins job configuration
-        BASE_URL = 'YOUR_APPLICATION_BASE_URL' // Thay thế bằng URL thực tế
-        LOGIN_USERNAME = 'mikegay123' // Thay thế bằng username thực tế hoặc dùng Jenkins credentials
-        LOGIN_PASSWORD = '123456'    // Thay thế bằng password thực tế hoặc dùng Jenkins credentials
+        // Sử dụng Jenkins Credentials để quản lý các thông tin nhạy cảm.
+        // Thay 'your-base-url-credential-id', 'your-login-username-credential-id',
+        // và 'your-login-password-credential-id' bằng ID của Credentials bạn đã tạo trong Jenkins.
+        BASE_URL = credentials('your-base-url-credential-id')
+        LOGIN_USERNAME = credentials('your-login-username-credential-id')
+        LOGIN_PASSWORD = credentials('your-login-password-credential-id')
         HEADLESS_MODE = 'true'       // Chạy ở headless mode trên CI
         CI = 'true'                  // Biến để báo hiệu đang chạy trong môi trường CI
     }

@@ -8,7 +8,7 @@ export class BasePage {
     if (!baseUrl) {
       throw new Error('BASE_URL is not defined in environment variables.');
     }
-    await this.page.goto(`${baseUrl}${path}`, { timeout: timeout || parseInt(process.env.DEFAULT_TIMEOUT || '60000', 10) });
+    await this.page.goto(`${baseUrl}${path}`, { timeout: timeout || 60000 }); // Timeout mặc định 60s, trước đó là process.env.DEFAULT_TIMEOUT
   }
 
   async fillElement(selector: string, value: string, timeout?: number) {
