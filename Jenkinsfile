@@ -1,61 +1,74 @@
 pipeline {
-    agent {
-        nodejs 'Node22' // Đảm bảo tên khớp với cấu hình Jenkins
+    agent any 
+    tools {
+        nodejs 'Node22' // Đảm bảo tên này khớp với cấu hình trong Jenkins Global Tool Configuration
     }
 
     environment {
-        BASE_URL = credentials('base-url') // Lưu URL trong Jenkins Credentials
-        LOGIN_USERNAME = credentials('login-username')
-        LOGIN_PASSWORD = credentials('login-password')
+        BASE_URL = credentials('BASE_URL') // Sử dụng Jenkins Credentials để bảo mật
+        LOGIN_USERNAME = credentials('LOGIN_USERNAME')
+        LOGIN_PASSWORD = credentials('LOGIN_PASSWORD')
         HEADLESS_MODE = 'true'
         CI = 'true'
     }
 
     triggers {
-        pollSCM('H/15 * * * *') // Kiểm tra mỗi 15 phút
+        pollSCM('H/5 * * * *') // Kiểm tra SCM mỗi 5 phút
     }
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                // Kiểm tra lỗi SCM trước khi checkout
+                script {
+                    try {
+                        checkout scm
+                    } catch (Exception e) {
+                        echo "Checkout failed: ${e.getMessage()}"
+                        throw e
+                    }
+                }
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                retry(3) {
-                    sh 'npm install'
-                    sh 'npx playwright install --with-deps' // Cài đặt trình duyệt Playwright
-                }
+                // Cài đặt dependencies và kiểm tra lỗi
+                sh 'npm install --no-optional' // --no-optional để giảm nguy cơ lỗi phụ thuộc
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'npm test || exit 1'
+                // Chạy test với lệnh cụ thể hơn
+                sh 'npx cucumber-js tests/features/**/*.feature --require tests/step-definitions/**/*.ts --require tests/hooks/hooks.ts --format json:cucumber-report.json --format summary --format progress-bar --publish-quiet'
             }
         }
 
         stage('Archive Artifacts') {
             steps {
+                // Lưu trữ báo cáo test
                 archiveArtifacts artifacts: 'cucumber-report.json', allowEmptyArchive: true
-                cucumber fileIncludePattern: 'cucumber-report.json', sortingMethod: 'ALPHABETICAL'
+                // Thêm Cucumber Reports plugin nếu có
+                step([$class: 'CucumberReportPublisher', jsonReportDirectory: '.', fileIncludePattern: 'cucumber-report.json'])
             }
         }
     }
 
     post {
         always {
-            cleanWs()
+            cleanWs() // Dọn dẹp workspace
         }
         success {
             echo 'Build successful!'
-            slackSend channel: '#ci-channel', message: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} succeeded!", color: 'good'
+            // Có thể thêm thông báo qua email hoặc Slack
         }
         failure {
             echo 'Build failed.'
-            slackSend channel: '#ci-channel', message: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} failed. Check ${env.BUILD_URL}", color: 'danger'
+            // Có thể thêm thông báo qua email hoặc Slack
+        }
+        unstable {
+            echo 'Build unstable, likely due to test failures.'
         }
     }
 }
