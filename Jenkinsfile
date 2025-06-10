@@ -10,6 +10,7 @@ pipeline {
         LOGIN_PASSWORD = credentials('LOGIN_PASSWORD')
         HEADLESS_MODE = 'true'
         CI = 'true'
+        PLAYWRIGHT_TIMEOUT = '30000' // Tăng timeout mặc định của Playwright lên 30 giây
     }
 
     triggers {
