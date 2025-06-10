@@ -7,9 +7,14 @@ pipeline {
     }
 
 environment {
-        BASE_URL = "${env.BASE_URL}"
-        LOGIN_USERNAME = "${env.LOGIN_USERNAME}"
-        LOGIN_PASSWORD = "${env.LOGIN_PASSWORD}"
+        // If BASE_URL, LOGIN_USERNAME, LOGIN_PASSWORD are build parameters:
+        // BASE_URL = "${params.BASE_URL}"
+        // LOGIN_USERNAME = "${params.LOGIN_USERNAME}"
+        // LOGIN_PASSWORD = "${params.LOGIN_PASSWORD}"
+        // If they are global environment variables set in Jenkins:
+        BASE_URL = env.BASE_URL
+        LOGIN_USERNAME = env.LOGIN_USERNAME
+        LOGIN_PASSWORD = env.LOGIN_PASSWORD
         HEADLESS_MODE = 'true'
         CI = 'true'
     }
