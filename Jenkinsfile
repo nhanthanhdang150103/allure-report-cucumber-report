@@ -18,6 +18,13 @@ pipeline {
         CI = 'true'                  // Biến để báo hiệu đang chạy trong môi trường CI
     }
 
+    triggers {
+        // Kiểm tra SCM mỗi 5 phút. Bạn có thể điều chỉnh lịch trình cron theo nhu cầu.
+        // Ví dụ: 'H/5 * * * *' nghĩa là kiểm tra mỗi 5 phút.
+        // Để hiểu rõ hơn về cú pháp cron, bạn có thể tham khảo tài liệu của Jenkins.
+        pollSCM('H/5 * * * *')
+    }
+
     stages {
         stage('Checkout') {
             steps {
