@@ -10,7 +10,8 @@ pipeline {
         LOGIN_PASSWORD = credentials('LOGIN_PASSWORD')
         HEADLESS_MODE = 'true'
         CI = 'true'
-        
+        // Thêm DEBUG để có log chi tiết từ Playwright khi chạy trên Jenkins
+        // DEBUG = 'pw:api' // Bỏ comment dòng này nếu muốn log API của Playwright
     }
 
     triggers {
@@ -41,15 +42,16 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                // Chạy test với lệnh cụ thể hơn, tăng timeout và bỏ publish-quiet
+                // Chạy test
+                // Nếu bạn đã bỏ comment DEBUG=pw:api ở trên, lệnh này sẽ có thêm log
                 sh 'npx cucumber-js tests/features/**/*.feature --require tests/step-definitions/**/*.ts --require tests/hooks/hooks.ts --format json:cucumber-report.json --format summary --format progress-bar'
             }
         }
 
         stage('Archive Artifacts') {
             steps {
-                // Lưu trữ báo cáo test
-                archiveArtifacts artifacts: 'cucumber-report.json', allowEmptyArchive: true
+                // Lưu trữ báo cáo test và kết quả test (bao gồm trace và screenshot nếu có)
+                archiveArtifacts artifacts: 'cucumber-report.json, test-results/', allowEmptyArchive: true
                 // Thêm Cucumber Reports plugin nếu có
                 step([$class: 'CucumberReportPublisher', jsonReportDirectory: '.', fileIncludePattern: 'cucumber-report.json'])
             }

@@ -16,6 +16,9 @@ export default defineConfig({
     navigationTimeout: 45000, // Tăng lên 45 giây cho navigation
 
     headless: process.env.HEADLESS_MODE === 'true',
+    // Bật trace và screenshot để dễ debug khi test fail trên CI
+    trace: 'retain-on-failure', // Giữ lại trace file khi test thất bại
+    screenshot: 'only-on-failure', // Chỉ chụp ảnh màn hình khi test thất bại
     // slowMo: process.env.SLOW_MO ? parseInt(process.env.SLOW_MO, 10) : 0, // Bạn có thể đặt slowMo ở đây nếu muốn
   },
 
