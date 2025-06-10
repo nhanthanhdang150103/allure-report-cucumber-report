@@ -1,5 +1,5 @@
 pipeline {
-    agent any 
+    agent any
     tools {
         nodejs 'Node22' // Đảm bảo tên này khớp với cấu hình trong Jenkins Global Tool Configuration
     }
@@ -40,8 +40,8 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                // Chạy test với lệnh cụ thể hơn
-                sh 'npx cucumber-js tests/features/**/*.feature --require tests/step-definitions/**/*.ts --require tests/hooks/hooks.ts --format json:cucumber-report.json --format summary --format progress-bar --publish-quiet'
+                // Chạy test với lệnh cụ thể hơn, tăng timeout và bỏ publish-quiet
+                sh 'npx cucumber-js tests/features/**/*.feature --require tests/step-definitions/**/*.ts --require tests/hooks/hooks.ts --format json:cucumber-report.json --format summary --format progress-bar --default-timeout 30000'
             }
         }
 
