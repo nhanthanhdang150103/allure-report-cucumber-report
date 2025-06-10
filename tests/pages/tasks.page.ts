@@ -55,10 +55,8 @@ async navigate() {
 
     // Chọn dự án
     await this.clickElement(TasksSelectors.projectSelect);
-    // Lưu ý: TasksSelectors.projectOption ('li.select2-results__option.select2-results__option--highlighted')
-    // có thể không ổn định. Cân nhắc dùng locator dựa trên text của project:
-    // await this.page.locator('li.select2-results__option', { hasText: project }).click();
-    await this.clickElement(TasksSelectors.projectOption); // Hoặc sử dụng locator ổn định hơn
+    // Sử dụng locator dựa trên text của project để ổn định hơn
+    await this.page.locator('li.select2-results__option', { hasText: project }).click();
 
     await this.fillElement(TasksSelectors.summaryTextarea, summary);
 
@@ -85,13 +83,14 @@ async navigate() {
 
   async getSuccessMessage() {
     const message = await this.getElementText(TasksSelectors.successMessage);
-    await this.waitForTimeout(2000); // Cân nhắc xóa hoặc làm tùy chọn
+    // Cân nhắc xóa bỏ waitForTimeout nếu không thực sự cần thiết
+    // Hoặc thay thế bằng việc chờ một điều kiện cụ thể hơn, ví dụ: chờ toast message biến mất
     return message;
   }
 
   async getErrorMessage() {
     const message = await this.getElementText(TasksSelectors.errorMessage);
-    await this.waitForTimeout(2000); // Cân nhắc xóa hoặc làm tùy chọn
+    // Cân nhắc xóa bỏ waitForTimeout nếu không thực sự cần thiết
     return message;
   }
 }
