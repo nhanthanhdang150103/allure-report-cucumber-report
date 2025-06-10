@@ -7,9 +7,9 @@ pipeline {
     }
 
 environment {
-        BASE_URL = "${env.BASE_URL}"
-        LOGIN_USERNAME = "${env.LOGIN_USERNAME}"
-        LOGIN_PASSWORD = "${env.LOGIN_PASSWORD}"
+        BASE_URL = "${params.BASE_URL}"
+        LOGIN_USERNAME = "${params.LOGIN_USERNAME}"
+        LOGIN_PASSWORD = "${params.LOGIN_PASSWORD}"
         HEADLESS_MODE = 'true'
         CI = 'true'
     }
