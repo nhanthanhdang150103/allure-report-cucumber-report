@@ -12,17 +12,17 @@ export class BasePage {
   }
 
   async fillElement(selector: string, value: string, timeout?: number) {
-    await this.page.waitForSelector(selector, { state: 'visible', timeout: timeout || 10000 });
+    await this.page.waitForSelector(selector, { state: 'visible', timeout: timeout });
     await this.page.fill(selector, value);
   }
 
   async clickElement(selector: string, options?: { timeout?: number }) {
-    await this.page.waitForSelector(selector, { state: 'visible', timeout: options?.timeout || 10000 });
+    await this.page.waitForSelector(selector, { state: 'visible', timeout: options?.timeout });
     await this.page.click(selector, options);
   }
 
   async getElementText(selector: string, options?: { state?: 'visible' | 'hidden' | 'attached' | 'detached', timeout?: number }): Promise<string | null> {
-    await this.page.waitForSelector(selector, { state: options?.state || 'visible', timeout: options?.timeout || 10000 });
+    await this.page.waitForSelector(selector, { state: options?.state || 'visible', timeout: options?.timeout });
     return await this.page.textContent(selector);
   }
 
