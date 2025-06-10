@@ -13,7 +13,7 @@ export default defineConfig({
 
     // Timeout mặc định cho các navigation (ví dụ: page.goto()).
     // Mặc định là 0 (không có timeout riêng cho navigation, sẽ dùng timeout của test).
-    navigationTimeout: 45000, // Tăng lên 45 giây cho navigation
+    navigationTimeout: 90000, // Thử tăng mạnh lên 90 giây cho navigation
 
     headless: process.env.HEADLESS_MODE === 'true',
     // Bật trace và screenshot để dễ debug khi test fail trên CI
