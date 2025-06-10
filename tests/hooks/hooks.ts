@@ -10,8 +10,8 @@ let page: Page;
 
 
 BeforeAll(async () => {
-      const headless = process.env.HEADLESS_MODE === 'true';
-      const slowMo = process.env.SLOW_MO ? parseInt(process.env.SLOW_MO, 10) : 0;
+      const headless = process.env.HEADLESS_MODE === 'true'; // Đọc từ biến môi trường
+      const slowMo = process.env.SLOW_MO ? parseInt(process.env.SLOW_MO, 10) : 0; // Đọc từ biến môi trường, mặc định là 0
       browser = await chromium.launch({ headless, slowMo });
 });
 
