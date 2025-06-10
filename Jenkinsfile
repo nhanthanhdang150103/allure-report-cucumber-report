@@ -41,7 +41,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 // Chạy test với lệnh cụ thể hơn, tăng timeout và bỏ publish-quiet
-                sh 'npx cucumber-js tests/features/**/*.feature --require tests/step-definitions/**/*.ts --require tests/hooks/hooks.ts --format json:cucumber-report.json --format summary --format progress-bar --default-timeout 30000'
+                sh 'npx cucumber-js tests/features/**/*.feature --require tests/step-definitions/**/*.ts --require tests/hooks/hooks.ts --format json:cucumber-report.json --format summary --format progress-bar'
             }
         }
 
