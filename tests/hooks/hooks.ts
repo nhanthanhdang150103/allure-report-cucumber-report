@@ -12,12 +12,12 @@ let page: Page;
 setDefaultTimeout(300 * 1000);
 
 BeforeAll(async () => {
-      // Đọc HEADLESS_MODE từ biến môi trường. Mặc định là true (chạy headless).
-      // Nếu HEADLESS_MODE được đặt thành 'false', trình duyệt sẽ chạy ở chế độ headed.
-      const headless = process.env.HEADLESS_MODE !== 'false';
-      // Đọc SLOW_MO từ biến môi trường. Mặc định là 0.
-      const slowMo = process.env.SLOW_MO ? parseInt(process.env.SLOW_MO, 10) : 0;
-      browser = await chromium.launch({ headless, slowMo });
+      // const headless = process.env.HEADLESS_MODE === 'true'; // Đọc từ biến môi trường
+      // const slowMo = process.env.SLOW_MO ? parseInt(process.env.SLOW_MO, 10) : 0; // Đọc từ biến môi trường, mặc định là 0
+      browser = await chromium.launch({ 
+        headless: true, 
+       });
+
 });
 
 Before(async () => {
