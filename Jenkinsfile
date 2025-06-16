@@ -8,6 +8,7 @@ pipeline {
         BASE_URL = credentials('BASE_URL') // Sử dụng Jenkins Credentials để bảo mật
         LOGIN_USERNAME = credentials('LOGIN_USERNAME')
         LOGIN_PASSWORD = credentials('LOGIN_PASSWORD')
+        CUCUMBER_TIMEOUT = '300000' // Set Cucumber step timeout via env var
         // HEADLESS_MODE = 'true'
         // CI = 'true'
         // Thêm DEBUG để có log chi tiết từ Playwright khi chạy trên Jenkins
