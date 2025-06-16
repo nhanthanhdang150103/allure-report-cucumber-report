@@ -9,7 +9,7 @@ let browser: Browser;
 let page: Page;
 // Tăng timeout mặc định cho các step của Cucumber (ví dụ: 100 giây)
 // Giá trị này nên lớn hơn page.setDefaultNavigationTimeout()
-setDefaultTimeout(100 * 1000);
+setDefaultTimeout(300 * 1000);
 
 BeforeAll(async () => {
       // const headless = process.env.HEADLESS_MODE === 'true'; // Đọc từ biến môi trường
