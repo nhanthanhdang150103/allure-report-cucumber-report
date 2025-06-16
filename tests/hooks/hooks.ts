@@ -12,12 +12,14 @@ let page: Page;
 setDefaultTimeout(300 * 1000);
 
 BeforeAll(async () => {
-      // const headless = process.env.HEADLESS_MODE === 'true'; // Đọc từ biến môi trường
-      // const slowMo = process.env.SLOW_MO ? parseInt(process.env.SLOW_MO, 10) : 0; // Đọc từ biến môi trường, mặc định là 0
-      browser = await chromium.launch({ 
-        headless: true, 
-       });
-
+  const headlessEnv = process.env.HEADLESS_MODE;
+  // Mặc định là true nếu HEADLESS_MODE không được đặt hoặc không phải là 'false'
+  const isHeadless = headlessEnv !== 'false';
+  const slowMo = process.env.SLOW_MO ? parseInt(process.env.SLOW_MO, 10) : 0;
+  browser = await chromium.launch({
+    headless: isHeadless,
+    slowMo: slowMo,
+  });
 });
 
 Before(async () => {
