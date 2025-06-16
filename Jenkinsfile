@@ -8,8 +8,8 @@ pipeline {
         BASE_URL = credentials('BASE_URL') // Sử dụng Jenkins Credentials để bảo mật
         LOGIN_USERNAME = credentials('LOGIN_USERNAME')
         LOGIN_PASSWORD = credentials('LOGIN_PASSWORD')
-        HEADLESS_MODE = 'true'
-        CI = 'true'
+        // HEADLESS_MODE = 'true'
+        // CI = 'true'
         // Thêm DEBUG để có log chi tiết từ Playwright khi chạy trên Jenkins
         // DEBUG = 'pw:api' // Bỏ comment dòng này nếu muốn log API của Playwright
     }
