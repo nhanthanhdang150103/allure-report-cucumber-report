@@ -19,6 +19,9 @@ BeforeAll(async () => {
 
 Before(async () => {
   page = await browser.newPage();
+  // Thiết lập timeout mặc định trực tiếp cho page
+  page.setDefaultTimeout(60000); // 60 giây cho các action (ví dụ: click, fill, waitForSelector)
+  page.setDefaultNavigationTimeout(90000); // 90 giây cho navigation (ví dụ: page.goto)
 });
 
 After(async () => {
