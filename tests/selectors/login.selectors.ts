@@ -1,5 +1,5 @@
 export const LoginSelectors = {
-  usernameInput: 'input#iusername[placeholder="Your Username"]',
+  usernameInput: ' ',
   passwordInput: '#ipassword',
   loginButton: 'button[type="submit"]',
   errorMessage: '.toast-message',
