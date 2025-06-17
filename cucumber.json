@@ -5,7 +5,10 @@
       "tests/step-definitions/*.ts",
       "tests/hooks/hooks.ts"
     ],
-    "format": ["@cucumber/pretty-formatter"],
+    "format": [
+      "@cucumber/pretty-formatter",
+      "json:reports/cucumber-report.json"
+    ],
     "requireModule": ["ts-node/register"],
     "timeout": 300000
   }
