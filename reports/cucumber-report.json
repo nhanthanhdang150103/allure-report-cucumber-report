@@ -1,0 +1,314 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "login-functionality;successful-login-with-valid-credentials",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "Successful login with valid credentials",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 77503499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "I am on the login page",
+            "match": {
+              "location": "tests\\step-definitions\\login.steps.ts:8"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 642875399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 5,
+            "name": "I enter username \"mikegay123\" and password \"123456\"",
+            "match": {
+              "location": "tests\\step-definitions\\login.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 120088799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 6,
+            "name": "I click the login button",
+            "match": {
+              "location": "tests\\step-definitions\\login.steps.ts:17"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 183399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 7,
+            "name": "I should see the success message \"Logged In Successfully.\"",
+            "match": {
+              "location": "tests\\step-definitions\\login.steps.ts:21"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 329493399
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 8425699
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "login-functionality;failed-login-with-invalid-credentials",
+        "keyword": "Scenario",
+        "line": 9,
+        "name": "Failed login with invalid credentials",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 86043300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 10,
+            "name": "I am on the login page",
+            "match": {
+              "location": "tests\\step-definitions\\login.steps.ts:8"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 557174100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 11,
+            "name": "I enter username \"wronguser\" and password \"wrongpass\"",
+            "match": {
+              "location": "tests\\step-definitions\\login.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 145380799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 12,
+            "name": "I click the login button",
+            "match": {
+              "location": "tests\\step-definitions\\login.steps.ts:17"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 263200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 13,
+            "name": "I should see the error message \"Invalid Login Credentials.\"",
+            "match": {
+              "location": "tests\\step-definitions\\login.steps.ts:26"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 102076500
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 5504800
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "login-functionality",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Login Functionality",
+    "tags": [],
+    "uri": "tests\\features\\login.feature"
+  },
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "add-tasks-functionality;add-a-new-task-successfully",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "Add a new task successfully",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 44762200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "I am logged in and on the tasks page",
+            "match": {
+              "location": "tests\\step-definitions\\tasks.steps.ts:8"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4754592599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 5,
+            "name": "I add a task with title \"New Task\", start date \"04\", end date \"04\", hours \"10\", project \"Manual Test\", summary \"This is a test task with more than sixty characters to meet the requirement.\", and description \"Detailed description of the task.\"",
+            "match": {
+              "location": "tests\\step-definitions\\tasks.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1113921299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 6,
+            "name": "I should see the task success message \"Task added.\"",
+            "match": {
+              "location": "tests\\step-definitions\\tasks.steps.ts:17"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 201452600
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 4612299
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "add-tasks-functionality;fail-to-add-a-task-with-short-summary",
+        "keyword": "Scenario",
+        "line": 8,
+        "name": "Fail to add a task with short summary",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 52184999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "I am logged in and on the tasks page",
+            "match": {
+              "location": "tests\\step-definitions\\tasks.steps.ts:8"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4526524699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 10,
+            "name": "I add a task with title \"New Task\", start date \"04\", end date \"04\", hours \"10\", project \"Manual Test\", summary \"Short summary\", and description \"Detailed description of the task.\"",
+            "match": {
+              "location": "tests\\step-definitions\\tasks.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1095124700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "I should see the task error message \"The summary field must be at least 60 characters in length.\"",
+            "match": {
+              "location": "tests\\step-definitions\\tasks.steps.ts:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 108796499
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 4372499
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "add-tasks-functionality",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Add Tasks Functionality",
+    "tags": [],
+    "uri": "tests\\features\\tasks.feature"
+  }
+]
