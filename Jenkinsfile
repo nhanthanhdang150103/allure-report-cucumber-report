@@ -19,20 +19,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Kiểm tra lỗi SCM trước khi checkout
-                script {
-                    try {
-                        checkout scm
-                    } catch (Exception e) {
-                        echo "Checkout failed: ${e.getMessage()}"
-                        throw e
-                    }
-                }
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 // Cài đặt dependencies và kiểm tra lỗi
