@@ -30,14 +30,16 @@ pipeline {
             steps {
                 // Chạy test
                 // Nếu bạn đã bỏ comment DEBUG=pw:api ở trên, lệnh này sẽ có thêm log
-                sh 'npx cucumber-js tests/features/**/*.feature --require tests/step-definitions/**/*.ts --require tests/hooks/hooks.ts --format json:cucumber-report.json --format summary --format progress-bar'
+                // Thêm Allure reporter: --format allure-cucumberjs/reporter
+                sh 'npx cucumber-js tests/features/**/*.feature --require tests/step-definitions/**/*.ts --require tests/hooks/hooks.ts --format json:cucumber-report.json --format summary --format progress-bar --format allure-cucumberjs/reporter'
             }
         }
 
         stage('Archive Artifacts') {
             steps {
                 // Lưu trữ báo cáo test và kết quả test (bao gồm trace và screenshot nếu có)
-                archiveArtifacts artifacts: 'cucumber-report.json, test-results/', allowEmptyArchive: true
+                // Thêm allure-results vào artifacts
+                archiveArtifacts artifacts: 'cucumber-report.json, test-results/, allure-results/', allowEmptyArchive: true
                 // Thêm Cucumber Reports plugin nếu có
                 step([$class: 'CucumberReportPublisher', jsonReportDirectory: '.', fileIncludePattern: 'cucumber-report.json'])
             }
@@ -45,7 +47,21 @@ pipeline {
     }
 
     post {
+        // Stage này sẽ chạy sau khi các stage khác hoàn thành (kể cả thành công hay thất bại)
+        // để đảm bảo Allure report luôn được tạo nếu có allure-results
         always {
+            script {
+                // Kiểm tra xem thư mục allure-results có tồn tại không
+                if (fileExists('allure-results')) {
+                    echo 'Generating Allure report...'
+                    // Sử dụng allure-commandline đã cài đặt trong node_modules hoặc cấu hình global tool trong Jenkins
+                    // Nếu allure không có trong PATH, bạn có thể cần chỉ định đường dẫn đầy đủ: ./node_modules/.bin/allure
+                    sh 'npx allure generate allure-results --clean -o allure-report'
+                    allure([reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]])
+                } else {
+                    echo 'No allure-results found, skipping Allure report generation.'
+                }
+            }
             cleanWs() // Dọn dẹp workspace
         }
         success {
