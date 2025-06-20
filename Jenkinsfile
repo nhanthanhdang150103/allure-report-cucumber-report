@@ -62,9 +62,9 @@ pipeline {
             script { // Script block is needed for Groovy logic like fileExists
                 if (fileExists('allure-results')) {
                     echo 'Generating Allure report...'
-                    // Lệnh này sẽ sử dụng allure từ node_modules/.bin nhờ cập nhật PATH
                     // Sử dụng npx để đảm bảo allure được tìm thấy và thực thi đúng cách
                     sh 'npx allure generate allure-results --clean -o allure-report'
+                    // allure plugin step
                     allure([reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]])
                 } else {
                     echo 'No allure-results found, skipping Allure report generation.'
