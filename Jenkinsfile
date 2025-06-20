@@ -63,8 +63,8 @@ pipeline {
                 if (fileExists('allure-results')) {
                     echo 'Generating Allure report...'
                     // Lệnh này sẽ sử dụng allure từ node_modules/.bin nhờ cập nhật PATH
-                    sh 'allure generate allure-results --clean -o allure-report'
-                    // allure plugin step
+                    // Sử dụng npx để đảm bảo allure được tìm thấy và thực thi đúng cách
+                    sh 'npx allure generate allure-results --clean -o allure-report'
                     allure([reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]])
                 } else {
                     echo 'No allure-results found, skipping Allure report generation.'
@@ -94,7 +94,8 @@ pipeline {
                                  <p>Changes:</p>
                                  <pre>${changes}</pre>""", // Sử dụng biến 'changes'
                     to: 'nhanthanhdang2003@gmail.com', // Email của bạn
-                    recipientProviders: [[$class: 'DevelopersRecipientProvider']] // Gửi cho những người đã commit code
+                    // Tạm thời loại bỏ recipientProviders để debug lỗi "unregistered user"
+                    // recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                 )
             }
         }
@@ -121,7 +122,8 @@ pipeline {
                                  <p>Changes:</p>
                                  <pre>${changes}</pre>""", // Sử dụng biến 'changes'
                     to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần, ví dụ: 'nhanthanhdang2003@gmail.com, ops-team@example.com')
-                    recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']]
+                    // Tạm thời loại bỏ recipientProviders để debug lỗi "unregistered user"
+                    // recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']]
                 )
             }
         }
@@ -147,7 +149,8 @@ pipeline {
                                  <p>Changes:</p>
                                  <pre>${changes}</pre>""", // Sử dụng biến 'changes'
                     to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần)
-                    recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                    // Tạm thời loại bỏ recipientProviders để debug lỗi "unregistered user"
+                    // recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                 )
             }
         }
