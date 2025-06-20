@@ -55,7 +55,7 @@ pipeline {
                 if (fileExists('allure-results')) {
                     echo 'Generating Allure report...'
                     // Sử dụng allure-commandline đã cài đặt trong node_modules hoặc cấu hình global tool trong Jenkins
-                    // Nếu allure không có trong PATH, bạn có thể cần chỉ định đường dẫn đầy đủ: ./node_modules/.bin/allure
+                    // Sử dụng đường dẫn đầy đủ đến file thực thi allure trong node_modules/.bin
                     sh 'npx allure generate allure-results --clean -o allure-report'
                     allure([reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]])
                 } else {
@@ -74,7 +74,7 @@ pipeline {
                              <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
                              <p>Changes:</p>
-                             <pre>${currentBuild.changeSets.collect { it.msg + ' (' + it.author + ')' }.join('\n')}</pre>""",
+                             <pre>${currentBuild.changeSets ? currentBuild.changeSets.collect { it.msg + ' (' + it.author + ')' }.join('\n') : 'No changes detected'}</pre>""",
                 to: 'nhanthanhdang2003@gmail.com', // Email của bạn
                 recipientProviders: [[$class: 'DevelopersRecipientProvider']] // Gửi cho những người đã commit code
             )
@@ -90,7 +90,7 @@ pipeline {
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
                              <p>Error: Check console output for details.</p>
                              <p>Changes:</p>
-                             <pre>${currentBuild.changeSets.collect { it.msg + ' (' + it.author + ')' }.join('\n')}</pre>""",
+                             <pre>${currentBuild.changeSets ? currentBuild.changeSets.collect { it.msg + ' (' + it.author + ')' }.join('\n') : 'No changes detected'}</pre>""",
                 to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần, ví dụ: 'nhanthanhdang2003@gmail.com, ops-team@example.com')
                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']]
             )
@@ -104,7 +104,7 @@ pipeline {
                              <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
                              <p>Changes:</p>
-                             <pre>${currentBuild.changeSets.collect { it.msg + ' (' + it.author + ')' }.join('\n')}</pre>""",
+                             <pre>${currentBuild.changeSets ? currentBuild.changeSets.collect { it.msg + ' (' + it.author + ')' }.join('\n') : 'No changes detected'}</pre>""",
                 to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần)
                 recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
