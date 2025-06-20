@@ -56,7 +56,7 @@ pipeline {
                     echo 'Generating Allure report...'
                     // Sử dụng allure-commandline đã cài đặt trong node_modules hoặc cấu hình global tool trong Jenkins
                     // Nếu allure không có trong PATH, bạn có thể cần chỉ định đường dẫn đầy đủ: ./node_modules/.bin/allure
-                    sh 'npx allure generate allure-results --clean -o allure-report'
+                    sh 'npm run report:allure:generate'
                     allure([reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]])
                 } else {
                     echo 'No allure-results found, skipping Allure report generation.'
