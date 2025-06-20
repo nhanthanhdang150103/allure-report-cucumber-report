@@ -66,37 +66,62 @@ pipeline {
         }
         success {
             echo 'Build successful!'
-            // Có thể thêm thông báo qua email hoặc Slack
-            emailext (
-                subject: "[Jenkins] SUCCESS: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                body: """<p>Build SUCCESSFUL for job: <b>${env.JOB_NAME}</b></p>
-                             <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
-                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
-                             <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
-                             <p>Changes:</p>
-                             <pre>${currentBuild.changeSets.collect { it.msg + ' (' + it.author + ')' }.join('\n')}</pre>""",
-                to: 'nhanthanhdang2003@gmail.com', // Email của bạn
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']] // Gửi cho những người đã commit code
-            )
+            script {
+                def changeSummaries = []
+                if (currentBuild.changeSets) {
+                    currentBuild.changeSets.each { logSet ->
+                        if (logSet.items) {
+                            logSet.items.each { entry ->
+                                changeSummaries.add("${entry.msg} (${entry.author.fullName})")
+                            }
+                        }
+                    }
+                }
+                def changesText = changeSummaries.join('\n')
+                emailext (
+                    subject: "[Jenkins] SUCCESS: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
+                    body: """<p>Build SUCCESSFUL for job: <b>${env.JOB_NAME}</b></p>
+                                 <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
+                                 <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                                 <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
+                                 <p>Changes:</p>
+                                 <pre>${changesText}</pre>""",
+                    to: 'nhanthanhdang2003@gmail.com',
+                    recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                )
+            }
         }
         failure {
             echo 'Build failed.'
-            // Có thể thêm thông báo qua email hoặc Slack
-            emailext (
-                subject: "[Jenkins] FAILURE: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                body: """<p>Build FAILED for job: <b>${env.JOB_NAME}</b></p>
-                             <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
-                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
-                             <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
-                             <p>Error: Check console output for details.</p>
-                             <p>Changes:</p>
-                             <pre>${currentBuild.changeSets.collect { it.msg + ' (' + it.author + ')' }.join('\n')}</pre>""",
-                to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần, ví dụ: 'nhanthanhdang2003@gmail.com, ops-team@example.com')
-                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']]
-            )
+            script {
+                def changeSummaries = []
+                if (currentBuild.changeSets) {
+                    currentBuild.changeSets.each { logSet ->
+                        if (logSet.items) {
+                            logSet.items.each { entry ->
+                                changeSummaries.add("${entry.msg} (${entry.author.fullName})")
+                            }
+                        }
+                    }
+                }
+                def changesText = changeSummaries.join('\n')
+                emailext (
+                    subject: "[Jenkins] FAILURE: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
+                    body: """<p>Build FAILED for job: <b>${env.JOB_NAME}</b></p>
+                                 <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
+                                 <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                                 <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
+                                 <p>Error: Check console output for details.</p>
+                                 <p>Changes:</p>
+                                 <pre>${changesText}</pre>""",
+                    to: 'nhanthanhdang2003@gmail.com',
+                    recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']]
+                )
+            }
         }
         unstable {
             echo 'Build unstable, likely due to test failures.'
+            // Có thể thêm thông báo qua email hoặc Slack
             emailext (
                 subject: "[Jenkins] UNSTABLE: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                 body: """<p>Build UNSTABLE for job: <b>${env.JOB_NAME}</b> (likely due to test failures)</p>
@@ -104,7 +129,7 @@ pipeline {
                              <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
                              <p>Changes:</p>
-                             <pre>${currentBuild.changeSets.collect { it.msg + ' (' + it.author + ')' }.join('\n')}</pre>""",
+                             <pre>${changesText}</pre>""",
                 to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần)
                 recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
