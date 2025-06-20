@@ -2,7 +2,8 @@
   "default": {
     "paths": ["tests/features/*.feature"],
     "require": [
-      "tests/step-definitions/*.ts"
+      "tests/step-definitions/*.ts",
+      "tests/hooks/hooks.ts"
     ],
     "format": [
       "@cucumber/pretty-formatter",
