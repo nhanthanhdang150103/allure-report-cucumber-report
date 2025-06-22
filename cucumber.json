@@ -5,11 +5,13 @@
       "tests/step-definitions/*.ts",
       "tests/hooks/hooks.ts"
     ],
+    "requireModule": ["ts-node/register"],
+    "timeout": 300000,
     "format": [
       "@cucumber/pretty-formatter",
-      "json:reports/cucumber-report.json"
+      "json:cucumber-report.json",
+      "allure-cucumberjs/reporter"
     ],
-    "requireModule": ["ts-node/register"],
-    "timeout": 300000
+    "formatOptions": { "colorsEnabled": true }
   }
 }

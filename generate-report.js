@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const reportDir = path.join(__dirname, 'reports');
-const reportJsonFile = path.join(reportDir, 'cucumber-report.json');
+const reportJsonFile = path.join(__dirname, 'cucumber-report.json');
 const reportHtmlFile = path.join(reportDir, 'cucumber-report.html');
 
 // Đảm bảo thư mục reports tồn tại

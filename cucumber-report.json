@@ -4,6 +4,83 @@
     "elements": [
       {
         "description": "",
+        "id": "account-settings-functionality;update-account-settings-successfully",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "Update account settings successfully",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 480160200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "I am logged in and on the account settings page",
+            "match": {
+              "location": "tests\\step-definitions\\account.steps.ts:8"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4027966799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 5,
+            "name": "I click the save button",
+            "match": {
+              "location": "tests\\step-definitions\\account.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 60654399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 6,
+            "name": "I should see the account success message \"Personal Information updated.\"",
+            "match": {
+              "location": "tests\\step-definitions\\account.steps.ts:17"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 49728800
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 87275799
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "account-settings-functionality",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Account Settings Functionality",
+    "tags": [],
+    "uri": "tests\\features\\account.feature"
+  },
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
         "id": "login-functionality;successful-login-with-valid-credentials",
         "keyword": "Scenario",
         "line": 3,
@@ -14,7 +91,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 223898099
+              "duration": 126357200
             }
           },
           {
@@ -27,7 +104,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 633692999
+              "duration": 286364100
             }
           },
           {
@@ -40,7 +117,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 130302400
+              "duration": 108371999
             }
           },
           {
@@ -48,12 +125,9 @@
             "keyword": "And ",
             "line": 6,
             "name": "I click the login button",
-            "match": {
-              "location": "tests\\step-definitions\\login.steps.ts:17"
-            },
             "result": {
-              "status": "passed",
-              "duration": 151099
+              "status": "undefined",
+              "duration": 0
             }
           },
           {
@@ -62,11 +136,11 @@
             "line": 7,
             "name": "I should see the success message \"Logged In Successfully.\"",
             "match": {
-              "location": "tests\\step-definitions\\login.steps.ts:21"
+              "location": "tests\\step-definitions\\login.steps.ts:17"
             },
             "result": {
-              "status": "passed",
-              "duration": 344233899
+              "status": "skipped",
+              "duration": 0
             }
           },
           {
@@ -74,7 +148,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 42181999
+              "duration": 28949100
             }
           }
         ],
@@ -93,7 +167,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 155329499
+              "duration": 97866299
             }
           },
           {
@@ -106,7 +180,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 1593503299
+              "duration": 712544400
             }
           },
           {
@@ -119,7 +193,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 114136400
+              "duration": 122181700
             }
           },
           {
@@ -127,12 +201,9 @@
             "keyword": "And ",
             "line": 12,
             "name": "I click the login button",
-            "match": {
-              "location": "tests\\step-definitions\\login.steps.ts:17"
-            },
             "result": {
-              "status": "passed",
-              "duration": 112699
+              "status": "undefined",
+              "duration": 0
             }
           },
           {
@@ -141,11 +212,11 @@
             "line": 13,
             "name": "I should see the error message \"Invalid Login Credentials.\"",
             "match": {
-              "location": "tests\\step-definitions\\login.steps.ts:26"
+              "location": "tests\\step-definitions\\login.steps.ts:22"
             },
             "result": {
-              "status": "passed",
-              "duration": 111001000
+              "status": "skipped",
+              "duration": 0
             }
           },
           {
@@ -153,7 +224,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 33562500
+              "duration": 27477999
             }
           }
         ],
@@ -183,7 +254,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 123964200
+              "duration": 123982500
             }
           },
           {
@@ -196,7 +267,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 4758286399
+              "duration": 4170829799
             }
           },
           {
@@ -209,7 +280,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 334575399
+              "duration": 334020300
             }
           },
           {
@@ -222,7 +293,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 231788899
+              "duration": 227614400
             }
           },
           {
@@ -230,7 +301,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 36840699
+              "duration": 36172300
             }
           }
         ],
@@ -249,7 +320,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 161541199
+              "duration": 161509200
             }
           },
           {
@@ -262,7 +333,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 4728105700
+              "duration": 4187536399
             }
           },
           {
@@ -275,7 +346,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 354083900
+              "duration": 328023499
             }
           },
           {
@@ -288,7 +359,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 111033800
+              "duration": 42155099
             }
           },
           {
@@ -296,7 +367,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 34128099
+              "duration": 34921999
             }
           }
         ],
