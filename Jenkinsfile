@@ -34,21 +34,18 @@ pipeline {
             }
         }
 
-        stage('Archive Artifacts') {
-            steps {
-                // Lưu trữ báo cáo test và kết quả test (bao gồm trace và screenshot nếu có)
-                // Thêm allure-results vào artifacts
-                archiveArtifacts artifacts: 'cucumber-report.json, test-results/, allure-results/', allowEmptyArchive: true
-                // Thêm Cucumber Reports plugin nếu có
-                step([$class: 'CucumberReportPublisher', jsonReportDirectory: '.', fileIncludePattern: 'cucumber-report.json'])
-            }
-        }
     }
 
     post {
         // Stage này sẽ chạy sau khi các stage khác hoàn thành (kể cả thành công hay thất bại)
-        // để đảm bảo Allure report luôn được tạo nếu có allure-results
         always {
+            // Luôn lưu trữ artifacts để có thể debug, đặc biệt là khi test thất bại
+            // (Playwright trace và screenshot được tạo khi fail)
+            archiveArtifacts artifacts: 'cucumber-report.json, test-results/, allure-results/', allowEmptyArchive: true
+
+            // Luôn xuất bản Cucumber report
+            step([$class: 'CucumberReportPublisher', jsonReportDirectory: '.', fileIncludePattern: 'cucumber-report.json', fileExcludePattern: ''])
+
             script {
                 // Kiểm tra xem thư mục allure-results có tồn tại không
                 if (fileExists('allure-results')) {
@@ -56,7 +53,7 @@ pipeline {
                     // Sử dụng allure-commandline đã cài đặt trong node_modules hoặc cấu hình global tool trong Jenkins
                     // Nếu allure không có trong PATH, bạn có thể cần chỉ định đường dẫn đầy đủ: ./node_modules/.bin/allure
                     sh 'npx allure generate allure-results --clean -o allure-report'
-                    allure([reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]])
+                    allure reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]
                 } else {
                     echo 'No allure-results found, skipping Allure report generation.'
                 }
