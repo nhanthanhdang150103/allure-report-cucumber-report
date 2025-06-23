@@ -52,8 +52,8 @@ pipeline {
                     echo 'Generating Allure report...'
                     // Sử dụng allure-commandline đã cài đặt trong node_modules hoặc cấu hình global tool trong Jenkins
                     // Chỉ định đường dẫn đầy đủ đến allure để đảm bảo chạy được trên mọi agent
-                    // Sử dụng `bat` cho Windows hoặc `sh` cho Linux. Jenkins sẽ tự chọn đúng.
-                    bat './node_modules/.bin/allure generate allure-results --clean -o allure-report'
+                    // Sử dụng npm script để đảm bảo tính di động và tránh các vấn đề về PATH
+                    sh 'npm run report:allure:generate'
                     allure reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]
                 } else {
                     echo 'No allure-results found, skipping Allure report generation.'
