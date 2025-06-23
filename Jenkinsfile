@@ -73,6 +73,7 @@ pipeline {
                              <p>Changes:</p>
                              <pre>${currentBuild.changeSets.flatten().collect { it.comment + ' (' + it.author.fullName + ')' }.join('\n')}</pre>""",
                 to: 'nhanthanhdang2003@gmail.com', // Email của bạn
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']] // Gửi cho những người đã commit code
             )
         }
         failure {
@@ -87,7 +88,8 @@ pipeline {
                              <p>Error: Check console output for details.</p>
                              <p>Changes:</p>                              
                              <pre>${currentBuild.changeSets.flatten().collect { it.comment + ' (' + it.author.fullName + ')' }.join('\n')}</pre>""",
-                to: 'nhanthanhdang2003@gmail.com' // Email của bạn (có thể thêm email khác nếu cần, ví dụ: 'nhanthanhdang2003@gmail.com, ops-team@example.com')
+                to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần, ví dụ: 'nhanthanhdang2003@gmail.com, ops-team@example.com')
+                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']]
             )
         }
         unstable {
@@ -100,7 +102,8 @@ pipeline {
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
                              <p>Changes:</p>
                              <pre>${currentBuild.changeSets.flatten().collect { it.comment + ' (' + it.author.fullName + ')' }.join('\n')}</pre>""",
-                to: 'nhanthanhdang2003@gmail.com' // Email của bạn (có thể thêm email khác nếu cần)
+                to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần)
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
         }
     }
