@@ -52,8 +52,8 @@ pipeline {
                     echo 'Generating Allure report...'
                     // Sử dụng allure-commandline đã cài đặt trong node_modules hoặc cấu hình global tool trong Jenkins
                     // Chỉ định đường dẫn đầy đủ đến allure để đảm bảo chạy được trên mọi agent
-                    // Sử dụng npm script để đảm bảo tính di động và tránh các vấn đề về PATH
-                    sh 'npm run report:allure:generate'
+                    // Sử dụng `bat` cho Windows hoặc `sh` cho Linux. Jenkins sẽ tự chọn đúng.
+                    bat './node_modules/.bin/allure generate allure-results --clean -o allure-report'
                     allure reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]
                 } else {
                     echo 'No allure-results found, skipping Allure report generation.'
@@ -73,7 +73,6 @@ pipeline {
                              <p>Changes:</p>
                              <pre>${currentBuild.changeSets.flatten().collect { it.comment + ' (' + it.author.fullName + ')' }.join('\n')}</pre>""",
                 to: 'nhanthanhdang2003@gmail.com', // Email của bạn
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']] // Gửi cho những người đã commit code
             )
         }
         failure {
@@ -88,8 +87,7 @@ pipeline {
                              <p>Error: Check console output for details.</p>
                              <p>Changes:</p>                              
                              <pre>${currentBuild.changeSets.flatten().collect { it.comment + ' (' + it.author.fullName + ')' }.join('\n')}</pre>""",
-                to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần, ví dụ: 'nhanthanhdang2003@gmail.com, ops-team@example.com')
-                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']]
+                to: 'nhanthanhdang2003@gmail.com' // Email của bạn (có thể thêm email khác nếu cần, ví dụ: 'nhanthanhdang2003@gmail.com, ops-team@example.com')
             )
         }
         unstable {
@@ -102,8 +100,7 @@ pipeline {
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
                              <p>Changes:</p>
                              <pre>${currentBuild.changeSets.flatten().collect { it.comment + ' (' + it.author.fullName + ')' }.join('\n')}</pre>""",
-                to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần)
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                to: 'nhanthanhdang2003@gmail.com' // Email của bạn (có thể thêm email khác nếu cần)
             )
         }
     }
