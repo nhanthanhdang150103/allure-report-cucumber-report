@@ -52,8 +52,8 @@ pipeline {
                     echo 'Generating Allure report...'
                     // Sử dụng allure-commandline đã cài đặt trong node_modules hoặc cấu hình global tool trong Jenkins
                     // Chỉ định đường dẫn đầy đủ đến allure để đảm bảo chạy được trên mọi agent
-                    // Sử dụng `bat` cho Windows hoặc `sh` cho Linux. Jenkins sẽ tự chọn đúng.
-                    bat './node_modules/.bin/allure generate allure-results --clean -o allure-report'
+                    // Sử dụng `npm run report:allure:generate` để tận dụng npx và đảm bảo cross-platform
+                    sh 'npm run report:allure:generate'
                     allure reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]
                 } else {
                     echo 'No allure-results found, skipping Allure report generation.'
@@ -68,7 +68,7 @@ pipeline {
                 subject: "[Jenkins] SUCCESS: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                 body: """<p>Build SUCCESSFUL for job: <b>${env.JOB_NAME}</b></p>
                              <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
-                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""" + """
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
                              <p>Changes:</p>
                              <pre>${currentBuild.changeSets.flatten().collect { it.comment + ' (' + it.author.fullName + ')' }.join('\n')}</pre>""",
@@ -83,7 +83,7 @@ pipeline {
                 subject: "[Jenkins] FAILURE: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                 body: """<p>Build FAILED for job: <b>${env.JOB_NAME}</b></p>
                              <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
-                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""" + """
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
                              <p>Error: Check console output for details.</p>
                              <p>Changes:</p>                              
@@ -98,7 +98,7 @@ pipeline {
                 subject: "[Jenkins] UNSTABLE: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                 body: """<p>Build UNSTABLE for job: <b>${env.JOB_NAME}</b> (likely due to test failures)</p>
                              <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
-                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""" + """
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
                              <p>Changes:</p>
                              <pre>${currentBuild.changeSets.flatten().collect { it.comment + ' (' + it.author.fullName + ')' }.join('\n')}</pre>""",
