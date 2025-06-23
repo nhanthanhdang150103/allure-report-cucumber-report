@@ -51,9 +51,9 @@ pipeline {
                 if (fileExists('allure-results')) {
                     echo 'Generating Allure report...'
                     // Sử dụng allure-commandline đã cài đặt trong node_modules hoặc cấu hình global tool trong Jenkins
-                    // Chỉ định đường dẫn đầy đủ đến allure để đảm bảo chạy được trên mọi agent
-                    // Sử dụng `npm run report:allure:generate` để tận dụng npx và đảm bảo cross-platform
-                    sh 'npm run report:allure:generate'
+                    // Sử dụng `bat` cho Windows agent để đảm bảo npm scripts chạy đúng.
+                    // `npm run report:allure:generate` sẽ gọi `npx allure ...`
+                    bat 'npm run report:allure:generate'
                     allure reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]
                 } else {
                     echo 'No allure-results found, skipping Allure report generation.'
@@ -68,10 +68,10 @@ pipeline {
                 subject: "[Jenkins] SUCCESS: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                 body: """<p>Build SUCCESSFUL for job: <b>${env.JOB_NAME}</b></p>
                              <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
-                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""" + """
+                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
                              <p>Changes:</p>
-                             <pre>${currentBuild.changeSets.flatten().collect { it.comment + ' (' + it.author.fullName + ')' }.join('\n')}</pre>""",
+                             <pre>${currentBuild.changeSets.collectMany { it.items }.collect { "${it.msg} (${it.author.fullName})" }.join('\n')}</pre>""",
                 to: 'nhanthanhdang2003@gmail.com', // Email của bạn
                 recipientProviders: [[$class: 'DevelopersRecipientProvider']] // Gửi cho những người đã commit code
             )
@@ -83,11 +83,11 @@ pipeline {
                 subject: "[Jenkins] FAILURE: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                 body: """<p>Build FAILED for job: <b>${env.JOB_NAME}</b></p>
                              <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
-                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""" + """
+                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
                              <p>Error: Check console output for details.</p>
-                             <p>Changes:</p>                              
-                             <pre>${currentBuild.changeSets.flatten().collect { it.comment + ' (' + it.author.fullName + ')' }.join('\n')}</pre>""",
+                             <p>Changes:</p>
+                             <pre>${currentBuild.changeSets.collectMany { it.items }.collect { "${it.msg} (${it.author.fullName})" }.join('\n')}</pre>""",
                 to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần, ví dụ: 'nhanthanhdang2003@gmail.com, ops-team@example.com')
                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']]
             )
@@ -98,10 +98,10 @@ pipeline {
                 subject: "[Jenkins] UNSTABLE: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                 body: """<p>Build UNSTABLE for job: <b>${env.JOB_NAME}</b> (likely due to test failures)</p>
                              <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
-                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""" + """
+                             <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
                              <p>Changes:</p>
-                             <pre>${currentBuild.changeSets.flatten().collect { it.comment + ' (' + it.author.fullName + ')' }.join('\n')}</pre>""",
+                             <pre>${currentBuild.changeSets.collectMany { it.items }.collect { "${it.msg} (${it.author.fullName})" }.join('\n')}</pre>""",
                 to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần)
                 recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
