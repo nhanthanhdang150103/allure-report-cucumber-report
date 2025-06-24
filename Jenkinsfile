@@ -52,7 +52,8 @@ pipeline {
                     echo 'Generating Allure report...'
                     // Sử dụng allure-commandline đã cài đặt trong node_modules hoặc cấu hình global tool trong Jenkins
                     // Sử dụng `npx` để tự động tìm và chạy lệnh allure từ node_modules/.bin, tương thích với cả Windows và Linux.
-                    bat 'npx allure generate allure-results --clean -o allure-report'
+                    // Đổi từ `bat` sang `sh` để tránh lỗi xử lý đường dẫn có khoảng trắng của cmd.exe trên Windows.
+                    sh 'npx allure generate allure-results --clean -o allure-report'
                     allure reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]
                 } else {
                     echo 'No allure-results found, skipping Allure report generation.'
