@@ -8,10 +8,10 @@ pipeline {
         BASE_URL = credentials('BASE_URL') // Sử dụng Jenkins Credentials để bảo mật
         LOGIN_USERNAME = credentials('LOGIN_USERNAME')
         LOGIN_PASSWORD = credentials('LOGIN_PASSWORD')
-        // HEADLESS_MODE = 'true'
-        // CI = 'true'
+        HEADLESS_MODE = 'true' // Bật chế độ headless cho CI để đảm bảo môi trường chạy ổn định
+        CI = 'true' // Đặt biến CI để cấu hình phù hợp cho môi trường CI (nếu có logic phụ thuộc vào biến này)
         // Thêm DEBUG để có log chi tiết từ Playwright khi chạy trên Jenkins
-        // DEBUG = 'pw:api' // Bỏ comment dòng này nếu muốn log API của Playwright
+        DEBUG = 'pw:api' // Bỏ comment dòng này để có log API chi tiết từ Playwright, giúp chẩn đoán lỗi
     }
 
     triggers {
