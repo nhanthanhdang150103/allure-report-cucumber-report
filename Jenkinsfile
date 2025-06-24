@@ -52,8 +52,8 @@ pipeline {
                     echo 'Generating Allure report...'
                     // Sử dụng allure-commandline đã cài đặt trong node_modules hoặc cấu hình global tool trong Jenkins
                     // Sử dụng `npx` để tự động tìm và chạy lệnh allure từ node_modules/.bin, tương thích với cả Windows và Linux.
-                    // Đổi từ `bat` sang `sh` để tránh lỗi xử lý đường dẫn có khoảng trắng của cmd.exe trên Windows.
-                    sh 'npx allure generate allure-results --clean -o allure-report'
+                   // Sử dụng `bat` với đường dẫn tuyệt đối và trích dẫn để đảm bảo chạy đúng trên Windows.
+                    bat "\"${WORKSPACE}\\node_modules\\.bin\\allure.cmd\" generate allure-results --clean -o allure-report"
                     allure reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-report']]
                 } else {
                     echo 'No allure-results found, skipping Allure report generation.'
@@ -70,8 +70,8 @@ pipeline {
                              <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
                              <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
-                             <p>Changes:</p>                              
-                             <pre>${currentBuild.changeSets.flatten().collect { it.getMsg() + ' (' + it.getAuthor().getFullName() + ')' }.join('\n')}</pre>""",
+                           <p>Changes:</p>
+                             <pre>${changesText}</pre>""",
                 to: 'nhanthanhdang2003@gmail.com', // Email của bạn
                 recipientProviders: [[$class: 'DevelopersRecipientProvider']] // Gửi cho những người đã commit code
             )
@@ -85,9 +85,9 @@ pipeline {
                              <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
                              <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
-                             <p>Error: Check console output for details.</p>                              
-                             <p>Changes:</p>                              
-                             <pre>${currentBuild.changeSets.flatten().collect { it.getMsg() + ' (' + it.getAuthor().getFullName() + ')' }.join('\n')}</pre>""",
+                             <p>Error: Check console output for details.</p>
+                             <p>Changes:</p>
+                             <pre>${changesText}</pre>""",
                 to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần, ví dụ: 'nhanthanhdang2003@gmail.com, ops-team@example.com')
                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']]
             )
@@ -100,8 +100,8 @@ pipeline {
                              <p>Build Number: <b>${env.BUILD_NUMBER}</b></p>
                              <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                              <p>Check out the Allure report: <a href="${env.BUILD_URL}allure/">${env.BUILD_URL}allure/</a></p>
-                             <p>Changes:</p>                              
-                             <pre>${currentBuild.changeSets.flatten().collect { it.getMsg() + ' (' + it.getAuthor().getFullName() + ')' }.join('\n')}</pre>""",
+                             <p>Changes:</p>
+                             <pre>${changesText}</pre>""",
                 to: 'nhanthanhdang2003@gmail.com', // Email của bạn (có thể thêm email khác nếu cần)
                 recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
